@@ -1,0 +1,20 @@
+{
+    "name": "daniel/vacunas-app",
+    "description": "Sistema de gestion de vacunas",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Daniel"
+        }
+    ],
+    "require": {}
+}
