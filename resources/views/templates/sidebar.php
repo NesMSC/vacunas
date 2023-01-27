@@ -10,10 +10,7 @@
             </div>
             <div class="ms-3">
                 <h6 class="mb-0">
-                    <?php 
-                        $user = App\Auth::getUser();
-                        echo "{$user->nombre} {$user->apellido}";
-                    ?>
+                    <?php $user = App\Auth::getUser(); echo "{$user->nombre} {$user->apellido}";?>
                 </h6>
                 <span>Admin</span>
             </div>

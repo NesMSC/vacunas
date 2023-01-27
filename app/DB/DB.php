@@ -134,10 +134,12 @@ class DB {
      * 
      * @return int  número de filas afectadas
      */
-    public static function delete($query) {
+    public static function delete($table, $row, $condition, $value) {
         // Obtener la instancia de la clase
         $instance = self::getInstance();
-    
+        
+        $query = "DELETE FROM $table WHERE $row $condition $value;";
+        
         // Realizar la consulta y obtener el resultado
         $result = $instance->conn->query($query);
     
@@ -153,13 +155,26 @@ class DB {
     /**
      * El método update recibe una consulta UPDATE y devuelve el número de filas afectadas
      * 
-     * @param string La consulta SQL
-     * 
+     * @param string $table
+     * @param array $data
+     * @param int $id
      * @return int  número de filas afectadas
      */
-    public static function update($query) {
+    public static function update($table, $data, $id) {
         // Obtener la instancia de la clase
         $instance = self::getInstance();
+
+        $query = "UPDATE $table SET ";
+
+        foreach ($data as $key => $value) {
+            $query .= "$key = '$value'";
+
+            if($data[array_key_last($data)] == $data[$key]) {
+                $query .= "WHERE id=$id;";
+            }else {
+                $query .= ", ";
+            }
+        }
 
         // Realizar la consulta y obtener el resultado
         

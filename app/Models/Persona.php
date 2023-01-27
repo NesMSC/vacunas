@@ -6,6 +6,7 @@ use App\DB\DB;
 
 class Persona 
 {
+    public $id;
     public $nombre;
     public $apellido;
     public $cedula;
@@ -30,6 +31,16 @@ class Persona
         ]);
 
         $this->id = $id;
+    }
+
+    public function update($data)
+    {
+        DB::update('personas', $data, $this->id);
+    }
+
+    public function delete()
+    {
+        DB::delete('personas', 'id', '=', $this->id);
     }
 
     public static function find($id)

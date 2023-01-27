@@ -52,6 +52,15 @@
                                                 Nuevo
                                             </a>
                                         </div>
+                                        <?php if(isset($message)): ?>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="alert alert-primary" role="alert">
+                                                        <?php echo $message?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endif ?>
                                         <?php require viewPath('pacientes.tabla') ?>
                                     </div>
                                 </div>

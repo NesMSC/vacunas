@@ -8,7 +8,7 @@ use App\Models\Usuario;
 
 class Paciente extends Persona
 {
-
+    
     public static function all()
     {
         $data = DB::select(

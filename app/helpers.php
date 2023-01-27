@@ -47,7 +47,7 @@ if(! function_exists('view')) {
         $_SESSION["REDIRECT_DATA"] = [];
 
         // Incluir la vista
-        
+        ob_start("ob_gzhandler");
         extract($viewData);
         require viewPath($viewName);
       
@@ -58,7 +58,7 @@ if(! function_exists('view')) {
         // Si le paso un template, se va a retornar esa vista adentro de ese template
         if($template) {
             // Iniciar el buffer de salida
-            ob_start();
+            ob_start("ob_gzhandler");
             $content = $html;
             require viewPath($template);
             $html = ob_get_contents();
@@ -89,5 +89,30 @@ if(! function_exists('redirect')) {
 if(! function_exists('encrypt')) {
     function encrypt(string $str) {
         return sha1($str.'6C284A26');
+    }
+}
+
+if(! function_exists('recast')) {
+    /**
+     * recast stdClass object to an object with type
+     *
+     * @param string $className
+     * @param stdClass $object
+     * @throws InvalidArgumentException
+     * @return mixed new, typed object
+     */
+    function recast($className, stdClass $object)
+    {
+        if (!class_exists($className))
+            throw new InvalidArgumentException(sprintf('Inexistant class %s.', $className));
+
+        $new = new $className();
+
+        foreach($object as $property => $value)
+        {
+            $new->$property = $value;
+        }
+
+        return $new;
     }
 }

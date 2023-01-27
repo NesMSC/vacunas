@@ -10,10 +10,7 @@
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 <img class="rounded-circle me-lg-2" src="http://vacunas.test/assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                 <span class="d-none d-lg-inline-flex">
-                    <?php 
-                        $user = App\Auth::getUser();
-                        echo "{$user->nombre} {$user->apellido}";
-                    ?>
+                    <?php $user = App\Auth::getUser(); echo "{$user->nombre} {$user->apellido}";?>
                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">

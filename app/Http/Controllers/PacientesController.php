@@ -34,6 +34,18 @@ class PacientesController
         return view('pacientes.create', [], 'principal');
     }
 
+    public function ver($id)
+    {
+        $paciente = Paciente::find($id);
+        return view('pacientes.show', ["paciente" => $paciente], 'principal');
+    }
+
+    public function editar($id)
+    {
+        $paciente = Paciente::find($id);
+        return view('pacientes.edit', ["paciente" => $paciente], 'principal');
+    }
+
     public function store(Request $request)
     {
         $data = $request->post();
@@ -69,9 +81,40 @@ class PacientesController
 
     }
 
-    public function ver($id)
+    public function update(Request $request, $id)
+    {
+        $data = $request->post();
+
+        if(!$data) redirect('/');
+
+        $paciente = Paciente::find($id);
+
+        try {
+            $paciente->update([
+                "nombre" => $data->nombres,
+                "apellido" => $data->apellidos,
+                "cedula" => $data->nacionalidad.$data->cedula,
+                "fecha_nacimiento" => $data->fecha_nacimiento,
+                "direccion" => $data->direccion,
+                "telefono" => $data->pre_telefono.$data->telefono,
+                "sexo" => $data->sexo
+            ]);
+
+            $paciente->usuario->update([
+                "correo" => $data->email
+            ]);
+
+            redirect("pacientes/ver/{$paciente->id}", ["success" => "Los datos fueron editados exitosamente"]);
+
+        } catch (\Throwable $th) {
+            throw $th->__toString();
+        }
+    }
+
+    public function delete($id)
     {
         $paciente = Paciente::find($id);
-        return view('pacientes.show', ["paciente" => $paciente], 'principal');
+        $paciente->delete();
+        redirect('pacientes', ["message" => "El paciente fue eliminado"]);
     }
 }

@@ -53,6 +53,7 @@ class Usuario
 
         if(count($data)) {
             $usuario = $data[0];
+            $instance->id = $id;
             $instance->nombre_usuario = $usuario['nombre_usuario'];
             $instance->correo = $usuario['correo'];
         }
@@ -75,5 +76,10 @@ class Usuario
         ]);
 
         $this->id = $id;
+    }
+
+    public function update($data)
+    {
+        DB::update('usuarios', $data, $this->id);
     }
 }

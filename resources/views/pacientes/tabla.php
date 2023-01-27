@@ -21,6 +21,16 @@
                     <a href="pacientes/ver/<?php echo $paciente->id  ?>" class="btn btn-sm btn-primary">
                         <i class="fas fa-eye"></i>
                     </a>
+                    <a href="pacientes/editar/<?php echo $paciente->id  ?>" class="btn btn-sm btn-success">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a 
+                        onclick="return confirm('¿Dese eliminar a este paciente?')" 
+                        href="pacientes/delete/<?php echo $paciente->id  ?>" 
+                        class="btn btn-sm btn-danger"
+                    >
+                        <i class="fas fa-trash"></i>
+                    </a>
                 </td>
             </tr>
         <?php endforeach ?>
