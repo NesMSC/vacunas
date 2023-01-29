@@ -9,7 +9,7 @@
                     <i class="fa fa-chart-line fa-3x text-primary"></i>
                     <div class="ms-3">
                         <p class="mb-2">Vacunas del día</p>
-                        <h6 class="mb-0">16</h6>
+                        <h6 class="mb-0">0</h6>
                     </div>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                     <i class="fa fa-chart-bar fa-3x text-primary"></i>
                     <div class="ms-3">
                         <p class="mb-2">Total Vacunas</p>
-                        <h6 class="mb-0">1234</h6>
+                        <h6 class="mb-0">0</h6>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <i class="fa fa-chart-area fa-3x text-primary"></i>
                     <div class="ms-3">
                         <p class="mb-2">Dosis totales</p>
-                        <h6 class="mb-0">1234</h6>
+                        <h6 class="mb-0">0</h6>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                     <i class="fa fa-user fa-3x text-primary"></i>
                     <div class="ms-2">
                         <p class="mb-2">Pacientes totales</p>
-                        <h6 class="mb-0">150</h6>
+                        <h6 class="mb-0">0</h6>
                     </div>
                 </div>
             </div>

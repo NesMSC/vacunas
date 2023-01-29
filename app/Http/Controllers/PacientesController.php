@@ -25,7 +25,8 @@ class PacientesController
 
         return view(
             'pacientes.home', 
-            ["pacientes" => $pacientes]
+            ["pacientes" => $pacientes],
+            'principal'
         );
     }
 
@@ -65,7 +66,7 @@ class PacientesController
             $usuario = new Usuario;
             $usuario->nombre_usuario = strtolower($data->nombres.$data->apellidos);
             $usuario->correo = $data->email;
-            $usuario->roles = [2];
+            $usuario->roles = [3];
             $usuario->save();
 
             $paciente->usuario = $usuario;

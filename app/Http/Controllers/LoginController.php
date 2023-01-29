@@ -14,18 +14,21 @@ class LoginController {
 
     public function signin($request)
     {
-        $data = $request->post();
-
-
-        if(!$data) redirect('/');
-
-        $user = Usuario::checkCredentials($data);
-
-        if($user) {
-            Auth::start($user);
-            redirect('home');
-        }else {
-            redirect('login', ["error" => "Credenciales incorrectas"]);
+        try {
+            $data = $request->post();
+    
+            if(!$data) redirect('/');
+    
+            $user = Usuario::checkCredentials($data);
+    
+            if($user) {
+                Auth::start($user);
+                redirect('home');
+            }else {
+                redirect('login', ["error" => "Credenciales incorrectas"]);
+            }
+        } catch (\Throwable $th) {
+            echo $th->__toString();
         }
     }
 

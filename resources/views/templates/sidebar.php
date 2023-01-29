@@ -5,7 +5,7 @@
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
-                <img class="rounded-circle" src="http://vacunas.test/assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                <img class="rounded-circle" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="" style="width: 40px; height: 40px;">
                 <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div class="ms-3">
@@ -19,7 +19,7 @@
             <a href="/" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Panel</a>
             <a href="/pacientes" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Pacientes</a>
             <a href="/vacunas" class="nav-item nav-link"><i class="fa fa-syringe"></i>Vacunas</a>
-            <a href="/usuarios" class="nav-item nav-link"><i class="fa fa-user-cog me-2"></i>Usuarios</a>
+            <!-- <a href="/usuarios" class="nav-item nav-link"><i class="fa fa-user-cog me-2"></i>Usuarios</a> -->
         </div>
     </nav>
 </div>
