@@ -43,7 +43,7 @@
     </div>
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="http://<?php echo $_SERVER['SERVER_NAME'] ?>/assets/lib/jquery/jquery-3.4.1.min.js"></script>
     <script>
         (function () {
         'use strict'
@@ -65,7 +65,7 @@
             })
         })()
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="http://<?php echo $_SERVER['SERVER_NAME'] ?>/assets/js/bootstrap.bundle.min.js"></script>
     <script src="http://<?php echo $_SERVER['SERVER_NAME'] ?>/assets/lib/chart/chart.min.js"></script>
     <script src="http://<?php echo $_SERVER['SERVER_NAME'] ?>/assets/lib/easing/easing.min.js"></script>
     <script src="http://<?php echo $_SERVER['SERVER_NAME'] ?>/assets/lib/waypoints/waypoints.min.js"></script>
