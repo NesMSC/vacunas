@@ -6,7 +6,7 @@
             <h5 class="card-title mb-4">
                 Editar paciente
             </h5>
-            <form class="row g-4" action="/pacientes/update/<?php echo $paciente->id ?>" method="POST">
+            <form class="row g-4 needs-validation" novalidate action="/pacientes/update/<?php echo $paciente->id ?>" method="POST">
                 <?php require viewPath('pacientes._form') ?>
             </form>
         </div>

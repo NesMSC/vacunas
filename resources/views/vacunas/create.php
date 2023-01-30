@@ -6,7 +6,7 @@
             <h5 class="card-title mb-4">
                 Añadir vacunas
             </h5>
-            <form class="row g-4" action="/vacunas/store" method="POST">
+            <form class="row g-4 needs-validation" novalidate action="/vacunas/store" method="POST">
                 <?php require viewPath('vacunas._form') ?>
             </form>
         </div>

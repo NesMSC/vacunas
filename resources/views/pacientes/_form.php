@@ -1,22 +1,29 @@
 <div class="col-md-4">
     <label for="nombres" class="form-label">Nombres</label>
     <input
+        required
         type="text" 
         class="form-control" 
         id="nombres" 
         name="nombres"
         value="<?php echo isset($paciente) ? $paciente->nombre : ""; ?>"
     >
+    <div class="invalid-feedback">
+        *Campo requerido
+    </div>
 </div>
 <div class="col-md-4">
     <label for="apellidos" class="form-label">Apellidos</label>
-    <input 
+    <input required
         type="text" 
         class="form-control" 
         id="apellidos" 
         name="apellidos"
         value="<?php echo isset($paciente) ? $paciente->apellido : ""; ?>"
     >
+    <div class="invalid-feedback">
+        *Campo requerido
+    </div>
 </div>
 <div class="col-md-2">
     <label for="sexo" class="form-label">Sexo</label>
@@ -59,19 +66,22 @@
             </select>
         </div>
         <div class="col-8">
-            <input 
+            <input required
                 type="text" 
                 class="form-control" 
                 id="cedula" 
                 name="cedula"
                 value="<?php echo isset($paciente) ? substr($paciente->cedula, 2) : "" ?>"
             >
+            <div class="invalid-feedback">
+                *Campo requerido
+            </div>
         </div>
     </div>
 </div>
 <div class="col-md-2">
     <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
-    <input type="date" value="<?php echo isset($paciente) ? $paciente->fecha_nacimiento : "" ?>" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
+    <input required type="date" value="<?php echo isset($paciente) ? $paciente->fecha_nacimiento : "" ?>" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
 </div>
 <div class="col-md-4">
     <label for="telefono" class="form-label">Número de teléfono</label>
@@ -96,19 +106,29 @@
             </select>
         </div>
         <div class="col-8">
-            <input type="text" class="form-control" value="<?php echo isset($paciente) ? substr($paciente->telefono, 5) : "" ?>" name="telefono">
+            <input required type="text" class="form-control" value="<?php echo isset($paciente) ? substr($paciente->telefono, 5) : "" ?>" name="telefono">
+            <div class="invalid-feedback">
+                *Campo requerido
+            </div>
         </div>
     </div>
 </div>
 <div class="col-md-4">
     <label for="email" class="form-label">Correo electrónico</label>
-    <input type="email" class="form-control" id="email" value="<?php echo isset($paciente) ? $paciente->usuario->correo : "" ?>" name="email">
+    <input required type="email" class="form-control" id="email" value="<?php echo isset($paciente) ? $paciente->usuario->correo : "" ?>" name="email">
+    <div class="invalid-feedback">
+        *Campo requerido
+    </div>
 </div>
 <div class="col-6">
     <label for="inputAddress" class="form-label">Dirección</label>
-    <input type="text" class="form-control" id="inputAddress" value="<?php echo isset($paciente) ? $paciente->direccion : "" ?>" name="direccion">
+    <input required type="text" class="form-control" id="inputAddress" value="<?php echo isset($paciente) ? $paciente->direccion : "" ?>" name="direccion">
+    <di class="invalid-feedback">
+        *Campo requerido
+    </div>
 </div>
-
-<div class="col-12">
-    <button type="submit" class="btn btn-primary">Guardar</button>
+<div class="col-12 m-6">
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
 </div>

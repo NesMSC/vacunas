@@ -1,5 +1,5 @@
 <!-- Sign In Start -->
-<form class="container-fluid" action="/login/signin" method="POST">
+<form class="container-fluid needs-validation" novalidate action="/login/signin" method="POST">
     <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
         <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
             <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
@@ -7,12 +7,18 @@
                     <h3>Iniciar sesión</h3>
                 </div>
                 <div class="form-floating mb-3">
-                    <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input required name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
                     <label for="floatingInput">Correo electrónico</label>
+                    <div class="invalid-feedback">
+                        El correo es requerido
+                    </div>
                 </div>
                 <div class="form-floating mb-4">
-                    <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <input required name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
                     <label for="floatingPassword">Contraseña</label>
+                    <div class="invalid-feedback">
+                        Contraseña requerida
+                    </div>
                 </div>
 
                 <?php if(isset($error)): ?>
