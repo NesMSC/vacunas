@@ -4,8 +4,9 @@
             <tr>
                 <th>Nombre</th>
                 <th>Descripción</th>
+                <th>Cantidad</th>
                 <th>Fecha de ingreso</th>
-                <th>Fecha de vencimiento</th>
+                <th>Estado</th>
                 <th>Accion</th>
             </tr>
         </thead>
@@ -14,8 +15,15 @@
                 <tr>
                     <td><?php echo $vacuna->nombre  ?></td>
                     <td><?php echo $vacuna->descripcion  ?></td>
+                    <td><?php echo $vacuna->cantidad  ?></td>
                     <td><?php echo $vacuna->fecha ?></td>
-                    <td><?php echo $vacuna->fecha_vencimiento  ?></td>
+                    <td>
+                        <?php if($vacuna->getEstado()): ?>
+                            <span class="badge bg-success">Segura</span>
+                        <?php else: ?>
+                            <span class="badge bg-danger">Caducada</span>
+                        <?php endif ?>
+                    </td>
                     <td>
                         <a href="vacunas/ver/<?php echo $vacuna->id  ?>" class="btn btn-sm btn-primary">
                             <i class="fas fa-eye"></i>

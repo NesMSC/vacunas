@@ -44,7 +44,7 @@ class VacunasController
 
             redirect("vacunas/ver/{$vacuna->id}", ["success" => "Agregado exitosamente!"]);
         } catch (\Throwable $th) {
-            throw $th->__toString();
+            echo $th->__toString();
         }
     }
 
@@ -60,6 +60,7 @@ class VacunasController
             $vacuna->update([
                 "nombre" => $data->nombre,
                 "descripcion" => $data->descripcion,
+                "cantidad" => $data->cantidad,
                 "fecha" => $data->fecha,
                 "fecha_vencimiento" => $data->fecha_vencimiento
             ]);

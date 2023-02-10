@@ -46,6 +46,20 @@
         *Campo requerido
     </div>
 </div>
+<div class="col-md-2">
+    <label for="cantidad" class="form-label">Cantidad</label>
+    <input 
+        required 
+        type="number" 
+        name="cantidad" 
+        id="cantidad"
+        class="form-control"
+        value="<?php echo isset($vacuna) ? $vacuna->cantidad : "" ?>"
+    >
+    <div class="invalid-feedback">
+        *Campo requerido
+    </div>
+</div>
 
 <div class="col-12">
     <div class="d-flex justify-content-center">

@@ -32,6 +32,10 @@
                     <strong>Fecha de vencimiento: </strong>
                     <p><?php echo $vacuna->fecha_vencimiento ?></p>
                 </div>
+                <div class="col-md-4">
+                    <strong>Cantidad: </strong>
+                    <p><?php echo $vacuna->cantidad ?></p>
+                </div>
             </div>
         </div>
     </div>

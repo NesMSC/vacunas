@@ -9,6 +9,7 @@ class Vacuna
     public $id;
     public $nombre;
     public $descripcion;
+    public int $cantidad;
     public $fecha;
     public $fecha_vencimiento;
 
@@ -39,6 +40,7 @@ class Vacuna
         $id = DB::insert('vacunas', [
             "nombre" => $this->nombre,
             "descripcion" => $this->descripcion,
+            "cantidad" => $this->cantidad,
             "fecha" => $this->fecha,
             "fecha_vencimiento" => $this->fecha_vencimiento
         ]);
