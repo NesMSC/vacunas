@@ -8,6 +8,12 @@
             </h5>
             <form class="row g-4 needs-validation" novalidate action="/pacientes/store" method="POST">
                 <?php require viewPath('pacientes._form') ?>
+                
+                <div class="col-12 m-6">
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

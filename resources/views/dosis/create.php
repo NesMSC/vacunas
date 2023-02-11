@@ -10,7 +10,7 @@
             <?php if(!isset($paciente)): ?>
             <form class="row needs-validation" novalidate action="/dosis/buscarPaciente" method="POST">
                 <div class="col-md-3">
-                    <label for="cedula" class="form-label">Participante</label>
+                    <label for="cedula" class="form-label">Paciente</label>
                     <div class="row g-0">
                         <div class="col-4">
                             <select id="nacionalidad" class="form-select" name="nacionalidad">

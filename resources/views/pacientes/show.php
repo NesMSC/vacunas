@@ -47,6 +47,14 @@
                     <p><?php echo $paciente->direccion ?></p>
                 </div>
             </div>
+            <div class="row g-0 mt-4 mb-4">
+                <div class="col-md-12">
+                    <?php require viewPath('pacientes.tabla_dosis') ?>
+                </div>
+                <div class="col-md-12">
+                    <?php require viewPath('pacientes.tabla_pendientes') ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>

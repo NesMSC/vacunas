@@ -7,6 +7,7 @@ use App\Http\Request;
 use App\Http\Middleware\AuthMiddleware;
 
 use App\Models\Paciente;
+use App\Models\Vacuna;
 use App\Models\Usuario;
 
 class PacientesController 
@@ -72,7 +73,7 @@ class PacientesController
             $paciente->usuario = $usuario;
             $paciente->save();
 
-            redirect("pacientes/ver/{$paciente->id}", ["success" => "Agregado exitosamente!"]);
+            redirect("pendientes/asignar/{$paciente->id}", ["success" => "Agregado exitosamente! Asigna una vacuna"]);
 
         } catch (\Throwable $th) {
             http_response_code(500);

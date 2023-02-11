@@ -87,6 +87,28 @@
                         search: "Buscar: "
                     },
             });
+
+            $('#tabla-dosis').DataTable({
+                    language: {
+                        lengthMenu: 'Mostrando _MENU_ registros por página',
+                        zeroRecords: 'No hay registros',
+                        info: 'Página _PAGE_ de _PAGES_',
+                        infoEmpty: 'El paciente no tiene dosis suministradas',
+                        infoFiltered: '(Filtrado de _MAX_ registros en total)',
+                        search: "Buscar: "
+                    },
+            });
+
+            $('#tabla-pendientes').DataTable({
+                    language: {
+                        lengthMenu: 'Mostrando _MENU_ registros por página',
+                        zeroRecords: 'Sin vacunas pendientes',
+                        info: 'Página _PAGE_ de _PAGES_',
+                        infoEmpty: 'Ningún registro disponible',
+                        infoFiltered: '(Filtrado de _MAX_ registros en total)',
+                        search: "Buscar: "
+                    },
+            });
         });
     </script>
     <!-- Template Javascript -->

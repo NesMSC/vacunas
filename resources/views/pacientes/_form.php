@@ -127,8 +127,3 @@
         *Campo requerido
     </div>
 </div>
-<div class="col-12 m-6">
-    <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-    </div>
-</div>

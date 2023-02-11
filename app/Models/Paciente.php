@@ -9,6 +9,7 @@ use App\Models\Usuario;
 class Paciente extends Persona
 {
     public $dosis = [];
+    public $pendientes = [];
 
     public static function all()
     {
@@ -67,7 +68,8 @@ class Paciente extends Persona
             $instance->direccion = $persona['direccion'];
             $instance->telefono = $persona['telefono'];
             $instance->sexo = $persona['sexo'];
-
+            $instance->dosis();
+            $instance->pendientes();
             $usuario = Usuario::find($persona['id_usuario']);
 
             $instance->usuario = $usuario;
@@ -90,5 +92,56 @@ class Paciente extends Persona
         });
 
         return count($dosis);
+    }
+    /**
+     * Verifica si ya la vacuna está pendiente
+     * @param Vacuna $vacuna la vacuna a encontrar
+     * @return bool
+     */
+    public function verifyPendiente(Vacuna $vacuna)
+    {
+        $data = Pendiente::all();
+
+        $pendientes = array_filter($data, function($pendiente) use ($vacuna) {
+            return $pendiente->vacuna->id == $vacuna->id && $pendiente->paciente->id == $this->id;
+        });
+
+        return count($pendientes);
+    }
+
+    public function dosis()
+    {
+        $data = DB::select("SELECT * FROM dosis WHERE id_persona={$this->id}");
+
+        $this->dosis = array_map(function ($dosis) {
+            $object = (object)[
+                "id" => $dosis["id"],
+                "paciente" => $this,
+                "vacuna" => Vacuna::find($dosis["id_vacuna"]),
+                "fecha_aplicacion" => $dosis["fecha_aplicacion"]
+            ];
+
+            $instance = recast(Dosis::class, $object);
+
+            return $instance;
+        }, $data);
+    }
+
+    public function pendientes()
+    {
+        $data = DB::select("SELECT * FROM vacunas_pendientes WHERE id_persona={$this->id}");
+
+        $this->pendientes = array_map(function ($pendiente) {
+            $object = (object)[
+                "id" => $pendiente["id"],
+                "paciente" => $this,
+                "vacuna" => Vacuna::find($pendiente["id_vacuna"]),
+                "fecha_prevista" => $pendiente["fecha_prevista"]
+            ];
+
+            $instance = recast(Pendiente::class, $object);
+
+            return $instance;
+        }, $data);
     }
 }
