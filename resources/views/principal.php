@@ -84,6 +84,7 @@
                         info: 'Página _PAGE_ de _PAGES_',
                         infoEmpty: 'Ningún registro disponible',
                         infoFiltered: '(Filtrado de _MAX_ registros en total)',
+                        search: "Buscar: "
                     },
             });
         });

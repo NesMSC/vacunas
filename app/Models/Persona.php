@@ -68,4 +68,30 @@ class Persona
             return $instance;
         }
     }
+
+    public static function findByCI($cedula)
+    {
+        $data = DB::select("SELECT * FROM personas WHERE cedula='$cedula'");
+        
+        if(count($data)) {
+            $persona = $data[0];
+            $instance = new self;
+            $instance->id = $persona['id'];
+            $instance->nombre = $persona['nombre'];
+            $instance->apellido = $persona['apellido'];
+            $instance->cedula = $persona['cedula'];
+            $instance->fecha_nacimiento = $persona['fecha_nacimiento'];
+            $instance->direccion = $persona['direccion'];
+            $instance->telefono = $persona['telefono'];
+            $instance->sexo = $persona['sexo'];
+
+            $usuario = Usuario::find($persona['id_usuario']);
+
+            $instance->usuario = $usuario;
+
+            return $instance;
+        }else {
+            return false;
+        }
+    }
 }
