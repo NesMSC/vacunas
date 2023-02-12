@@ -5,7 +5,6 @@
                 <th>Nombres</th>
                 <th>Apellidos</th>
                 <th>Cédula</th>
-                <th>Fecha de nacimiento</th>
                 <th>Teléfono</th>
                 <th>Acción</th>
             </tr>
@@ -16,7 +15,6 @@
                     <td><?php echo $paciente->nombre  ?></td>
                     <td><?php echo $paciente->apellido  ?></td>
                     <td><?php echo $paciente->cedula ?></td>
-                    <td><?php echo $paciente->fecha_nacimiento  ?></td>
                     <td><?php echo $paciente->telefono  ?></td>
                     <td>
                         <a href="pacientes/ver/<?php echo $paciente->id  ?>" class="btn btn-sm btn-primary">
