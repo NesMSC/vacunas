@@ -91,9 +91,9 @@
             $('#tabla-dosis').DataTable({
                     language: {
                         lengthMenu: 'Mostrando _MENU_ registros por página',
-                        zeroRecords: 'No hay registros',
+                        zeroRecords: 'El paciente no tiene dosis suministradas',
                         info: 'Página _PAGE_ de _PAGES_',
-                        infoEmpty: 'El paciente no tiene dosis suministradas',
+                        infoEmpty: 'No hay registros',
                         infoFiltered: '(Filtrado de _MAX_ registros en total)',
                         search: "Buscar: "
                     },

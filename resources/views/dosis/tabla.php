@@ -17,7 +17,7 @@
                     <td><?php echo $value->paciente->cedula ?></td>
                     <td><?php echo $value->vacuna->nombre  ?></td>
                     <td><?php echo $value->vacuna->descripcion  ?></td>
-                    <td><?php echo $value->fecha_aplicación  ?></td>
+                    <td><?php echo $value->fecha_aplicacion  ?></td>
                     <td>
                         <a 
                             onclick="return confirm('¿Dese eliminar a esta dosis?')" 

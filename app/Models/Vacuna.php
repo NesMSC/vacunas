@@ -64,4 +64,11 @@ class Vacuna
         $inputDate = new \DateTime($this->fecha_vencimiento);
         return $inputDate > $now;
     }
+
+    public function decreaseOne()
+    {
+        DB::update('vacunas', [
+            "cantidad" => $this->cantidad - 1
+        ], $this->id);
+    }
 }

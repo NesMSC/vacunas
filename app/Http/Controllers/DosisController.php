@@ -83,9 +83,10 @@ class DosisController
             $dosis->paciente = $paciente;
             $dosis->vacuna = $vacuna;
             date_default_timezone_set('America/Caracas');
-            $dosis->fecha_aplicación = date('Y-m-d');
+            $dosis->fecha_aplicacion = date('Y-m-d');
             $dosis->save();
 
+            $vacuna->decreaseOne();
             redirect('dosis', ["message" => "Dosis registrada con exito"]);
 
         } catch (\Throwable $th) {

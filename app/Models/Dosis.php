@@ -11,7 +11,7 @@ class Dosis
     public $id;
     public Paciente $paciente;
     public Vacuna $vacuna;
-    public $fecha_aplicación;
+    public $fecha_aplicacion;
 
     public static function all()
     {
@@ -24,7 +24,7 @@ class Dosis
             $dosis->id = $value['id'];
             $dosis->paciente = Paciente::find($value['id_persona']);
             $dosis->vacuna = Vacuna::find($value['id_vacuna']);
-            $dosis->fecha_aplicación = $value['fecha_aplicacion'];
+            $dosis->fecha_aplicacion = $value['fecha_aplicacion'];
 
             $array_dosis[] = $dosis;
         }
@@ -41,7 +41,7 @@ class Dosis
             $dosis->id = $data[0]['id'];
             $dosis->paciente = Paciente::find($data[0]['id_persona']);
             $dosis->vacuna = Vacuna::find($data[0]['id_vacuna']);
-            $dosis->fecha_aplicación = $data[0]['fecha_aplicacion'];
+            $dosis->fecha_aplicacion = $data[0]['fecha_aplicacion'];
             return $dosis;
         }
 
@@ -52,8 +52,10 @@ class Dosis
         $id = DB::insert('dosis', [
             "id_persona" => $this->paciente->id,
             "id_vacuna" => $this->vacuna->id,
-            "fecha_aplicacion" => $this->fecha_aplicación
+            "fecha_aplicacion" => $this->fecha_aplicacion
         ]);
+
+        $this->deleteDosisFromPendientes();
 
         $this->id = $id;
     }
@@ -61,5 +63,34 @@ class Dosis
     public function delete()
     {
         DB::delete('dosis', 'id', '=', $this->id);
+    }
+
+    public static function today()
+    {
+        $dosis_totales = self::all();
+
+        date_default_timezone_set('America/Caracas');
+        $now = date('Y-m-d');;
+    
+        $dosis_del_dia = array_filter($dosis_totales, function(Dosis $dosis) use ($now) {
+
+            return $dosis->fecha_aplicacion == $now;
+        });
+
+        return $dosis_del_dia;
+    }
+
+    private function deleteDosisFromPendientes()
+    {
+        $pendientes = $this->paciente->pendientes;
+        $vacuna = $this;
+
+        $pendiente = array_filter($pendientes, function (Pendiente $pendiente) use ($vacuna) {
+            return $vacuna->id = $pendiente->vacuna->id;
+        });
+
+        if(!empty($pendiente)) {
+            $pendiente[0]->delete();
+        }
     }
 }

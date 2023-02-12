@@ -46,4 +46,9 @@ class Pendiente
 
         $this->id = $id;
     }
+
+    public function delete()
+    {
+        DB::delete('vacunas_pendientes', 'id', '=', $this->id);
+    }
 }
