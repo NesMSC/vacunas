@@ -5,7 +5,6 @@
                 <th>Paciente</th>
                 <th>Cedula</th>
                 <th>Vacuna</th>
-                <th>Descripcion</th>
                 <th>Fecha de aplicación</th>
                 <th>Acción</th>
             </tr>
@@ -16,7 +15,6 @@
                     <td><?php echo $value->paciente->nombre . ' ' . $value->paciente->apellido ?></td>
                     <td><?php echo $value->paciente->cedula ?></td>
                     <td><?php echo $value->vacuna->nombre  ?></td>
-                    <td><?php echo $value->vacuna->descripcion  ?></td>
                     <td><?php echo $value->fecha_aplicacion  ?></td>
                     <td>
                         <a 

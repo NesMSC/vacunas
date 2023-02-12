@@ -3,7 +3,6 @@
         <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Descripción</th>
                 <th>Cantidad</th>
                 <th>Fecha de ingreso</th>
                 <th>Estado</th>
@@ -14,7 +13,6 @@
             <?php foreach($vacunas as $vacuna): ?>
                 <tr>
                     <td><?php echo $vacuna->nombre  ?></td>
-                    <td><?php echo $vacuna->descripcion  ?></td>
                     <td><?php echo $vacuna->cantidad  ?></td>
                     <td><?php echo $vacuna->fecha ?></td>
                     <td>
