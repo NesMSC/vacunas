@@ -83,11 +83,11 @@ class Dosis
     private function deleteDosisFromPendientes()
     {
         $pendientes = $this->paciente->pendientes;
-        $vacuna = $this;
+        $vacuna = $this->vacuna;
 
-        $pendiente = array_filter($pendientes, function (Pendiente $pendiente) use ($vacuna) {
-            return $vacuna->id = $pendiente->vacuna->id;
-        });
+        $pendiente = array_values(array_filter($pendientes, function (Pendiente $pendiente) use ($vacuna) {
+            return $vacuna->id == $pendiente->vacuna->id;
+        }));
 
         if(!empty($pendiente)) {
             $pendiente[0]->delete();

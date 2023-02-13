@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-8">
+                <div class="col-12">
                         <div class="table-responsive">
                             <table id="tabla" class=" table table-striped" tyle="width: 100%;">
                                 <thead>
@@ -68,7 +68,7 @@
                                                 <form action="/dosis/store" method="POST">
                                                     <input type="hidden" name="vacuna" value="<?php echo $vacuna->id ?>">
                                                     <input type="hidden" name="paciente" value="<?php echo $paciente->id ?>">
-                                                    <button class="btn btn-primary" type="submit">
+                                                    <button class="btn btn-sm btn-primary" type="submit">
                                                         Agregar
                                                     </button>
                                                 </form>
