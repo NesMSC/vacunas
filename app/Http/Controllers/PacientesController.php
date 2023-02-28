@@ -73,12 +73,11 @@ class PacientesController
             $paciente->usuario = $usuario;
             $paciente->save();
 
-            redirect("pendientes/asignar/{$paciente->id}", ["success" => "Agregado exitosamente! Asigna una vacuna"]);
+            redirect("dosis/asignar/{$paciente->id}", ["success" => "Agregado exitosamente! Asigna una vacuna"]);
 
         } catch (\Throwable $th) {
             http_response_code(500);
             echo $th->getMessage();
-            die();
         }
 
     }
