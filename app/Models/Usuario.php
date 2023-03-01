@@ -11,8 +11,7 @@ class Usuario
     public $id;
     public $nombre_usuario;
     public $correo;
-    public $roles = [];
-    public $permisos = [];
+    public array $roles = [];
 
     static function checkCredentials($data)
     {
@@ -36,7 +35,7 @@ class Usuario
             $usuario = new self;
             $usuario->correo = $user['correo'];
             $usuario->nombre_usuario = $user['nombre_usuario'];
-
+            $usuario->roles();
             $instance->usuario = $usuario;
 
             return $instance;
@@ -70,10 +69,12 @@ class Usuario
             "correo" => $this->correo
         ]);
 
-        DB::insert('usuarios_roles', [
-            "id_usuario" => $id,
-            "id_rol" => $this->roles[0]
-        ]);
+        foreach($this->roles as $rol) {
+            DB::insert('usuarios_roles', [
+                "id_usuario" => $id,
+                "id_rol" => $rol->id
+            ]);
+        }
 
         $this->id = $id;
     }
@@ -81,5 +82,34 @@ class Usuario
     public function update($data)
     {
         DB::update('usuarios', $data, $this->id);
+    }
+
+    public function roles()
+    {
+        $data = DB::select(
+            "SELECT roles.nombre FROM usuarios_roles
+            INNER JOIN roles ON roles.id=usuarios_roles.id_rol
+            WHERE usuarios_roles.id_usuario={$this->id}"
+        );
+
+        $this->roles = array_map(function ($rol) {
+            return new Rol($rol["nombre"]);
+        }, $data);
+    }
+
+    public function hasRol($name)
+    {
+        $rol = array_filter($this->roles, function ($rol) use ($name) {
+            return $rol->nombre == $name;
+        });
+    
+        // Verificar si se encontró un rol con el nombre especificado
+        if (count($rol) > 0) {
+            // Devolver el primer rol encontrado
+            return $rol[0];
+        } else {
+            // El usuario no tiene este rol
+            return false;
+        }
     }
 }
