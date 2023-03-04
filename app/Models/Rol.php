@@ -16,6 +16,28 @@ class Rol
         $this->findByName();
     }
 
+    static function all()
+    {
+
+        $data = DB::select(
+            "SELECT * FROM roles WHERE status=1");
+
+        $array_roles = [];
+
+        foreach ($data as $value) {
+            $rol  = new self;
+            $rol->id = $value['id'];
+            $rol->nombre = $value['nombre'];
+            $rol->permisos();
+            $array_roles[] = $rol;
+        }
+
+        return  array_filter(
+            $array_roles, 
+            fn($rol) => $rol->nombre !== 'Paciente'
+        );
+    }
+
     public static function find($id)
     {
         $data = DB::select(
@@ -38,17 +60,17 @@ class Rol
     {
         $data = DB::select(
             "SELECT * FROM roles_permisos 
-            INNER JOIN permisos ON roles_permisos.id_permiso=permiso.id 
+            INNER JOIN permisos ON roles_permisos.id_permiso=permisos.id 
             WHERE roles_permisos.id_rol={$this->id}"
         );
 
-        $this->permisos = array_map(fn($permiso) => $permiso->nombre, $data);
+        $this->permisos = array_map(fn($permiso) => $permiso['nombre'], $data);
     }
 
     private function findByName()
     {
         $data = DB::select(
-            "SELECT * FROM roles WHERE roles.nombre={$this->nombre}"
+            "SELECT * FROM roles WHERE roles.nombre='{$this->nombre}'"
         );
 
         if(count($data)) {

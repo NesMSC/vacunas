@@ -20,7 +20,7 @@
             <a href="/pacientes" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Pacientes</a>
             <a href="/vacunas" class="nav-item nav-link"><i class="fa fa-syringe me-2"></i>Vacunas</a>
             <a href="/dosis" class="nav-item nav-link"><i class="fas fa-prescription-bottle-alt me-2"></i>Dosis</a>
-            <!-- <a href="/usuarios" class="nav-item nav-link"><i class="fa fa-user-cog me-2"></i>Usuarios</a> -->
+            <a href="/usuarios" class="nav-item nav-link"><i class="fa fa-user-cog me-2"></i>Usuarios</a>
         </div>
     </nav>
 </div>

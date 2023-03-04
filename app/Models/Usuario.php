@@ -12,12 +12,38 @@ class Usuario
     public $nombre_usuario;
     public $correo;
     public array $roles = [];
+    public Persona $persona;
+
+    static function all()
+    {
+        $data = DB::select(
+            "SELECT * FROM usuarios");
+
+        $array_usuarios = [];
+
+        foreach ($data as $value) {
+            $usuario = new self;
+            $usuario->id = $value['id'];
+            $usuario->nombre_usuario = $value['nombre_usuario'];
+            $usuario->correo = $value['correo'];
+            $usuario->roles();
+            $array_usuarios[] = $usuario;
+        }
+
+        return  array_filter(
+            $array_usuarios, 
+            function ($usuario) {
+                return Usuario::hasAvailableRol($usuario);
+            }
+        );
+    }
 
     static function checkCredentials($data)
     {
         $contrasena = encrypt($data->password);
         $query = DB::select(
-            "SELECT * FROM usuarios
+            "SELECT personas.*, usuarios.id as id_usuario, usuarios.* 
+                FROM usuarios
                 INNER JOIN personas
                 ON usuarios.id = personas.id_usuario
                 WHERE contrasena='$contrasena'
@@ -33,10 +59,11 @@ class Usuario
             $instance->telefono = $user['telefono'];
             
             $usuario = new self;
+            $usuario->id = $user['id_usuario'];
             $usuario->correo = $user['correo'];
             $usuario->nombre_usuario = $user['nombre_usuario'];
-            $usuario->roles();
             $instance->usuario = $usuario;
+            $instance->usuario->roles();
 
             return $instance;
         }
@@ -55,6 +82,8 @@ class Usuario
             $instance->id = $id;
             $instance->nombre_usuario = $usuario['nombre_usuario'];
             $instance->correo = $usuario['correo'];
+            $instance->persona();
+            $instance->roles();
         }
 
         return $instance;
@@ -84,29 +113,74 @@ class Usuario
         DB::update('usuarios', $data, $this->id);
     }
 
+    public function setRol(Rol $rol)
+    {
+        if(!$this->hasRol($rol->nombre)) {
+            DB::insert('usuarios_roles', [
+                "id_usuario" => $this->id,
+                "id_rol" => $rol->id
+            ]);
+        }
+    }
+
+    public function persona()
+    {
+        $data = DB::select("SELECT * FROM personas WHERE id_usuario={$this->id}")[0];
+
+        $this->persona = recast(Persona::class, (object)[
+            "nombre" => $data['nombre'],
+            "apellido" => $data['apellido'],
+            "cedula" => $data['cedula'],
+            "fecha_nacimiento" => $data['fecha_nacimiento'],
+            "direccion" => $data['direccion'],
+            "telefono" => $data['telefono'],
+            "sexo" => $data['sexo']
+        ]);
+    }
+
     public function roles()
     {
         $data = DB::select(
             "SELECT roles.nombre FROM usuarios_roles
             INNER JOIN roles ON roles.id=usuarios_roles.id_rol
-            WHERE usuarios_roles.id_usuario={$this->id}"
+            WHERE usuarios_roles.id_usuario={$this->id} 
+            AND roles.status = 1"
         );
 
-        $this->roles = array_map(function ($rol) {
-            return new Rol($rol["nombre"]);
-        }, $data);
+        if(!empty($data)) {
+            $this->roles = array_map(function ($rol) {
+                return new Rol($rol["nombre"]);
+            }, array_values($data));
+        }
     }
 
-    public function hasRol($name)
+    public static function hasAvailableRol($usuario) {
+        $roles = [];
+        $availableRoles = array_map(function ($rol) {
+            return $rol->nombre;
+        }, Rol::all());
+
+        foreach($usuario->roles as $rol) {
+            $roles[] = $rol->nombre;
+        }
+
+        foreach ($roles as $role) {
+            if (in_array($role, $availableRoles)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasRol($name): Rol | bool
     {
         $rol = array_filter($this->roles, function ($rol) use ($name) {
             return $rol->nombre == $name;
         });
-    
         // Verificar si se encontró un rol con el nombre especificado
         if (count($rol) > 0) {
             // Devolver el primer rol encontrado
-            return $rol[0];
+            return array_values($rol)[0];
         } else {
             // El usuario no tiene este rol
             return false;

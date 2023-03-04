@@ -6,7 +6,7 @@
         class="form-control" 
         id="nombres" 
         name="nombres"
-        value="<?php echo isset($paciente) ? $paciente->nombre : ""; ?>"
+        value="<?php echo isset($paciente) ? $paciente->nombre : ''; ?>"
     >
     <div class="invalid-feedback">
         *Campo requerido
@@ -123,7 +123,7 @@
 <div class="col-6">
     <label for="inputAddress" class="form-label">Dirección</label>
     <input required type="text" class="form-control" id="inputAddress" value="<?php echo isset($paciente) ? $paciente->direccion : "" ?>" name="direccion">
-    <di class="invalid-feedback">
+    <div class="invalid-feedback">
         *Campo requerido
     </div>
 </div>

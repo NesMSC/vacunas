@@ -7,6 +7,7 @@ use App\Http\Request;
 use App\Http\Middleware\AuthMiddleware;
 
 use App\Models\Paciente;
+use App\Models\Rol;
 use App\Models\Vacuna;
 use App\Models\Usuario;
 
@@ -67,7 +68,7 @@ class PacientesController
             $usuario = new Usuario;
             $usuario->nombre_usuario = strtolower($data->nombres.$data->apellidos);
             $usuario->correo = $data->email;
-            $usuario->roles = [3];
+            $usuario->roles = [ new Rol('Paciente') ];
             $usuario->save();
 
             $paciente->usuario = $usuario;
