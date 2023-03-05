@@ -58,6 +58,17 @@ class DB {
         }
     }
 
+    public static function query($query)
+    {
+        // Obtener la instancia de la clase
+        $instance = self::getInstance();
+
+        // Realizar la consulta y obtener el resultado
+        $result = $instance->conn->query($query);
+
+        return $result;
+    }
+
     /**
      *  El método select recibe una consulta SELECT y devuelve el resultado de la consulta
      * 
