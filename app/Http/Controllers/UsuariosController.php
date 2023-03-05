@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Auth;
 use App\Http\Middleware\AuthMiddleware;
 use App\Http\Request;
 use App\Models\Persona;
@@ -31,6 +32,15 @@ class UsuariosController
     {
         $usuario = Usuario::find($id);
         return view('usuarios.show', ["usuario" => $usuario], 'principal');
+    }
+
+    public function editar($id)
+    {
+        $usuario = Usuario::find($id);
+        return view('usuarios.edit', [
+            "usuario" => $usuario,
+            "roles" => Rol::all()
+        ], 'principal');
     }
 
     public function buscar(Request $request)
@@ -114,6 +124,50 @@ class UsuariosController
         } catch (\Throwable $th) {
             http_response_code(500);
             echo $th->getMessage();
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->post();
+
+        if(!$data) redirect('/');
+        $usuario = Usuario::find($id);
+
+        $contrasena = empty($data->password) ? false : encrypt($data->password);
+
+        if($contrasena) {
+            $usuario->update([
+                "nombre_usuario" => $data->nombre_usuario,
+                "contrasena" => $contrasena,
+                "correo" => $data->correo
+            ]);
+        }else {
+            $usuario->update([
+                "nombre_usuario" => $data->nombre_usuario,
+                "correo" => $data->correo
+            ]);
+        }
+
+        if(!(Auth::getUser()->usuario->id == $id)) {
+            $rol = Rol::find($data->rol);
+            $usuario->updateRol($rol);
+        }
+
+        return view('usuarios.show', [
+            "usuario" => Usuario::find($id),
+            "success" => "Usuario editado exitosamente."
+        ], 'principal');
+    }
+
+    public function delete($id)
+    {
+        if(Auth::getUser()->usuario->id !== $id) {
+            $usuario = Usuario::find($id);
+            $usuario->delete();
+            redirect('usuarios', ["message" => "El usuario fue eliminado"]);
+        } else {
+            redirect('usuarios', ["error" => "No puede eliminar su propio usuario."]);
         }
     }
 }

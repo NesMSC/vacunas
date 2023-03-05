@@ -23,6 +23,7 @@
                                     </div>
                                 </div>
                             <?php endif ?>
+                            <?php require viewPath('alerts.error') ?>
                             <?php require viewPath('usuarios.tabla') ?>
                         </div>
                     </div>

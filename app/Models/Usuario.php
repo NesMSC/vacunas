@@ -123,11 +123,24 @@ class Usuario
         }
     }
 
+    public function updateRol(Rol $rol)
+    {
+        if(!$this->hasRol($rol->nombre)) {
+            DB::query(
+                "UPDATE usuarios_roles
+                SET `id_rol`={$rol->id}
+                WHERE `id_usuario`={$this->id}
+                AND `id_rol`={$this->roles[0]->id}"
+            );
+        }
+    }
+
     public function persona()
     {
         $data = DB::select("SELECT * FROM personas WHERE id_usuario={$this->id}")[0];
 
         $this->persona = recast(Persona::class, (object)[
+            "id" => $data['id'],
             "nombre" => $data['nombre'],
             "apellido" => $data['apellido'],
             "cedula" => $data['cedula'],
@@ -154,7 +167,23 @@ class Usuario
         }
     }
 
-    public static function hasAvailableRol($usuario) {
+    private function allRoles()
+    {
+        $data = DB::select(
+            "SELECT roles.nombre FROM usuarios_roles
+            INNER JOIN roles ON roles.id=usuarios_roles.id_rol
+            WHERE usuarios_roles.id_usuario={$this->id}"
+        );
+
+        if(!empty($data)) {
+            return array_map(function ($rol) {
+                return new Rol($rol["nombre"]);
+            }, array_values($data));
+        }
+    }
+
+    public static function hasAvailableRol($usuario) 
+    {
         $roles = [];
         $availableRoles = array_map(function ($rol) {
             return $rol->nombre;
@@ -174,7 +203,7 @@ class Usuario
 
     public function hasRol($name): Rol | bool
     {
-        $rol = array_filter($this->roles, function ($rol) use ($name) {
+        $rol = array_filter($this->allRoles(), function ($rol) use ($name) {
             return $rol->nombre == $name;
         });
         // Verificar si se encontró un rol con el nombre especificado
@@ -184,6 +213,20 @@ class Usuario
         } else {
             // El usuario no tiene este rol
             return false;
+        }
+    }
+
+    public function delete()
+    {
+        if(!$this->hasRol('Paciente')) {
+            $this->persona->delete();
+            DB::delete('usuarios', 'id', '=', $this->id);
+        }else {
+            foreach ($this->roles as $rol) {
+                if($rol->nombre != 'Paciente') {
+                    DB::delete('usuarios_roles', 'id_usuario', '=', "{$this->id} AND id_rol={$rol->id}");
+                }
+            }
         }
     }
 }
