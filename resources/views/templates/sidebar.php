@@ -19,33 +19,36 @@
             </div>
         </div>
         <div class="navbar-nav w-100">
-            <a href="/" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Panel</a>
+            <a href="/" class="nav-item nav-link <?php if(routeHas('home')): ?> active <?php endif ?>">
+                <i class="fa fa-tachometer-alt me-2"></i>
+                Panel
+            </a>
             <?php if(Auth::hasPermission('pacientes.consultar')): ?>
-            <a href="/pacientes" class="nav-item nav-link">
+            <a href="/pacientes" class="nav-item nav-link<?php if(routeHas('pacientes')): ?> active <?php endif ?>">
                 <i class="fa fa-users me-2"></i>
                 Pacientes
             </a>
             <?php endif ?>
             <?php if(Auth::hasPermission('vacunas.consultar')): ?>
-                <a href="/vacunas" class="nav-item nav-link">
+                <a href="/vacunas" class="nav-item nav-link<?php if(routeHas('vacunas')): ?> active <?php endif ?>">
                     <i class="fa fa-syringe me-2"></i>
                     Vacunas
                 </a>
             <?php endif ?>
             <?php if(Auth::hasPermission('dosis.consultar')): ?>
-                <a href="/dosis" class="nav-item nav-link">
+                <a href="/dosis" class="nav-item nav-link<?php if(routeHas('dosis')): ?> active <?php endif ?>">
                     <i class="fas fa-prescription-bottle-alt me-2"></i>
                     Dosis
                 </a>
             <?php endif ?>
             <?php if(Auth::hasPermission('usuarios.consultar')): ?>
-                <a href="/usuarios" class="nav-item nav-link">
+                <a href="/usuarios" class="nav-item nav-link<?php if(routeHas('usuarios')): ?> active <?php endif ?>">
                     <i class="fa fa-user-cog me-2"></i>
                     Usuarios
                 </a>
             <?php endif ?>
             <?php if(Auth::hasPermission('roles.consultar')): ?>
-                <a href="/roles" class="nav-item nav-link">
+                <a href="/roles" class="nav-item nav-link<?php if(routeHas('roles')): ?> active <?php endif ?>">
                     <i class="fas fa-id-badge me-2"></i>
                     Roles
                 </a>

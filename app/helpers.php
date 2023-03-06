@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Request;
 use App\Http\Response;
 
 /**
@@ -78,6 +80,16 @@ if(! function_exists('redirect')) {
         $_SESSION["REDIRECT_DATA"] = $data;
 
         header("Location: /$to");
+    }
+}
+
+if(! function_exists('routeHas')) {
+    function routeHas($name) 
+    {
+        $request = new Request;
+        if($request->controller == $name) {
+            return true;
+        }
     }
 }
 
