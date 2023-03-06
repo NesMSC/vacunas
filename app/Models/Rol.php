@@ -8,7 +8,9 @@ class Rol
 {
     public $id;
     public $nombre;
+    public $descripcion;
     public $permisos = [];
+    public bool $status;
 
     public function __construct($nombre = '')
     {
@@ -28,13 +30,15 @@ class Rol
             $rol  = new self;
             $rol->id = $value['id'];
             $rol->nombre = $value['nombre'];
+            $rol->descripcion = $value['descripcion'];
+            $rol->status = $value['status'];
             $rol->permisos();
             $array_roles[] = $rol;
         }
 
         return  array_filter(
             $array_roles, 
-            fn($rol) => $rol->nombre !== 'Paciente'
+            fn($rol) => $rol->status
         );
     }
 
@@ -47,9 +51,11 @@ class Rol
         $instance = new self;
 
         if(count($data)) {
-            $usuario = $data[0];
+            $rol = $data[0];
             $instance->id = $id;
-            $instance->nombre = $usuario['nombre'];
+            $instance->nombre = $rol['nombre'];
+            $instance->descripcion = $rol['descripcion'];
+            $instance->status = $rol['status'];
             $instance->with('permisos');
         }
 
@@ -64,7 +70,10 @@ class Rol
             WHERE roles_permisos.id_rol={$this->id}"
         );
 
-        $this->permisos = array_map(fn($permiso) => $permiso['nombre'], $data);
+        $this->permisos = array_map(fn($permiso) => (object)[
+            "nombre" => $permiso["nombre"],
+            "descripcion" => $permiso["descripcion"]
+        ], $data);
     }
 
     private function findByName()
@@ -83,10 +92,10 @@ class Rol
 
     public function hasPermission($name)
     {
-        $permiso = array_filter($this->permisos, function ($permiso) use ($name) {
-            return $permiso == $name;
-        });
-    
+        $permiso = array_values(array_filter($this->permisos, function ($permiso) use ($name) {
+            return $permiso->nombre == $name;
+        }));
+
         return count($permiso) > 0 ? $permiso[0] : false;
     }
 

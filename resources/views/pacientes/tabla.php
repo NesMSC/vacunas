@@ -1,3 +1,4 @@
+<?php use App\Auth; ?>
 <div class="table-responsive">
     <table id="tabla" class="table table-striped" tyle="width: 100%;">
         <thead>
@@ -20,16 +21,20 @@
                         <a href="pacientes/ver/<?php echo $paciente->id  ?>" class="btn btn-sm btn-primary">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="pacientes/editar/<?php echo $paciente->id  ?>" class="btn btn-sm btn-success">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a 
-                            onclick="return confirm('¿Dese eliminar a este paciente?')" 
-                            href="pacientes/delete/<?php echo $paciente->id  ?>" 
-                            class="btn btn-sm btn-danger"
-                        >
-                            <i class="fas fa-trash"></i>
-                        </a>
+                        <?php if(Auth::hasPermission('pacientes.actualizar')): ?>
+                            <a href="pacientes/editar/<?php echo $paciente->id  ?>" class="btn btn-sm btn-success">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        <?php endif ?>
+                        <?php if(Auth::hasPermission('pacientes.eliminar')): ?>
+                            <a 
+                                onclick="return confirm('¿Dese eliminar a este paciente?')" 
+                                href="pacientes/delete/<?php echo $paciente->id  ?>" 
+                                class="btn btn-sm btn-danger"
+                            >
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        <?php endif ?>
                     </td>
                 </tr>
             <?php endforeach ?>

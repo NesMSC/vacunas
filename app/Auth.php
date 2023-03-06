@@ -32,4 +32,15 @@ class Auth
     {
         return $_SESSION['CURRENT-USER'];
     }
+
+    static function hasPermission($permission)
+    {
+        $user = self::getUser()->usuario;
+
+        foreach ($user->roles as $rol) {
+            if($rol->hasPermission($permission)) {
+                return true;
+            }
+        }
+    }
 }
