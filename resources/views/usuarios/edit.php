@@ -8,7 +8,7 @@
             </h5>
             <?php require viewPath('alerts.error') ?>
             <?php require viewPath('alerts.message') ?>
-                <form class="row g-4 needs-validation" method="post" action="/usuarios/update/<?php echo $usuario->persona->id ?>">
+                <form class="row g-4 needs-validation" method="post" action="/usuarios/update/<?php echo $usuario->id ?>">
                     <div class="col-md-4">
                         <label for="usuario" class="form-label">Nombre de usuario</label>
                         <input type="text" required class="form-control" id="usuario" name="nombre_usuario" value="<?php echo $usuario->nombre_usuario ?>">

@@ -1,7 +1,7 @@
 <div class="sidebar pe-4 pb-3">
     <nav class="navbar bg-light navbar-light">
-        <a href="index.html" class="navbar-brand mx-4 mb-3">
-            <h3 class="text-primary">LOGO</h3>
+        <a href="index.html" class="navbar-brand m-auto mb-3">
+            <img src="http://vacunas.test/assets/img/logo.png" alt="logo" style="width: 60px; height: 60px;">
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
@@ -15,7 +15,7 @@
                         $user = Auth::getUser(); echo "{$user->nombre} {$user->apellido}";
                     ?>
                 </h6>
-                <span>Admin</span>
+                <span><?php echo $user->usuario->roles[0]->nombre ?></span>
             </div>
         </div>
         <div class="navbar-nav w-100">

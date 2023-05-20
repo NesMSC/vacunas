@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Auth;
 use App\Http\Middleware\AuthMiddleware;
 
 use App\Models\Rol;
@@ -18,6 +19,7 @@ class RolesController
 
     public function index()
     {
+        if(!Auth::hasPermission('roles.consultar')) redirect('');
         $roles = Rol::all();
         return view('roles.home', [
             "roles" => $roles
@@ -26,6 +28,7 @@ class RolesController
 
     public function ver($id)
     {
+        if(!Auth::hasPermission('roles.consultar')) redirect('');
         $rol = Rol::find($id);
         return view('roles.show', [
             "rol" => $rol

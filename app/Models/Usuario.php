@@ -125,13 +125,18 @@ class Usuario
 
     public function updateRol(Rol $rol)
     {
+        $query = "UPDATE usuarios_roles
+        SET `id_rol`={$rol->id}
+        WHERE `id_usuario`={$this->id}";
+
+        // Puede que el usuario tenga un rol inactivo. 
+        // Los roles inactivos no apareceran en el array de roles.
+        if(count($this->roles) > 0) {
+            $query .= " AND `id_rol`={$this->roles[0]->id}";
+        }
+
         if(!$this->hasRol($rol->nombre)) {
-            DB::query(
-                "UPDATE usuarios_roles
-                SET `id_rol`={$rol->id}
-                WHERE `id_usuario`={$this->id}
-                AND `id_rol`={$this->roles[0]->id}"
-            );
+            DB::query($query);
         }
     }
 

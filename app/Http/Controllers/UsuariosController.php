@@ -21,6 +21,7 @@ class UsuariosController
     
     public function index()
     {
+        if(!Auth::hasPermission('usuarios.consultar')) redirect('');
         $usuarios = Usuario::all();
 
         return view('usuarios.home', [
@@ -30,12 +31,14 @@ class UsuariosController
 
     public function ver($id)
     {
+        if(!Auth::hasPermission('usuarios.consultar')) redirect('');
         $usuario = Usuario::find($id);
         return view('usuarios.show', ["usuario" => $usuario], 'principal');
     }
 
     public function editar($id)
     {
+        if(!Auth::hasPermission('usuarios.actualizar')) redirect('');
         $usuario = Usuario::find($id);
         return view('usuarios.edit', [
             "usuario" => $usuario,
@@ -45,6 +48,7 @@ class UsuariosController
 
     public function buscar(Request $request)
     {
+        if(!Auth::hasPermission('usuarios.crear')) redirect('');
         $data = $request->post();
         $cedula = $data?->nacionalidad.$data?->cedula;
         $persona = Persona::findByCI($cedula ?? null);
@@ -62,11 +66,13 @@ class UsuariosController
 
     public function registrar()
     {
+        if(!Auth::hasPermission('usuarios.crear')) redirect('');
         return view('usuarios.create', [], 'principal');
     }
 
     public function registrarNuevo()
     {
+        if(!Auth::hasPermission('usuarios.crear')) redirect('');
         return view('usuarios.create', [
             "nueva" => true, 
             "roles" => Rol::all()
@@ -75,8 +81,9 @@ class UsuariosController
 
     public function store(Request $request, $id = null)
     {
+        if(!Auth::hasPermission('usuarios.crear')) redirect('');
         $data = $request->post();
-        if(!$data) redirect('/');
+        if(!$data) redirect('');
 
         $rol = Rol::find($data->rol);
 
@@ -129,9 +136,10 @@ class UsuariosController
 
     public function update(Request $request, $id)
     {
+        if(!Auth::hasPermission('usuarios.actualizar')) redirect('');
         $data = $request->post();
 
-        if(!$data) redirect('/');
+        if(!$data) redirect('');
         $usuario = Usuario::find($id);
 
         $contrasena = empty($data->password) ? false : encrypt($data->password);
@@ -162,6 +170,7 @@ class UsuariosController
 
     public function delete($id)
     {
+        if(!Auth::hasPermission('usuarios.eliminar')) redirect('');
         if(Auth::getUser()->usuario->id !== $id) {
             $usuario = Usuario::find($id);
             $usuario->delete();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Auth;
 use App\Http\Request;
 
 use App\Http\Middleware\AuthMiddleware;
@@ -22,6 +23,7 @@ class DosisController
 
     public function index()
     {
+        if(!Auth::hasPermission('dosis.consultar')) redirect('');
         $dosis = Dosis::all();
 
         return view(
@@ -33,6 +35,7 @@ class DosisController
 
     public function crear()
     {
+        if(!Auth::hasPermission('dosis.crear')) redirect('');
         return view('dosis.create', [], 'principal');
     }
 
@@ -40,7 +43,7 @@ class DosisController
     {
         $data = $request->post();
 
-        if(!$data) redirect('/');
+        if(!$data) redirect('');
 
         try {
             $cedula = $data->nacionalidad.$data->cedula;
@@ -60,6 +63,7 @@ class DosisController
 
     public function asignar($id)
     {
+        if(!Auth::hasPermission('dosis.crear')) redirect('');
         $paciente = Paciente::find($id);
 
         return view('dosis.create', [
@@ -70,9 +74,10 @@ class DosisController
 
     public function store(Request $request)
     {
+        if(!Auth::hasPermission('dosis.crear')) redirect('');
         $data = $request->post();
 
-        if(!$data) redirect('/');
+        if(!$data) redirect('');
 
         try {
 
@@ -96,6 +101,7 @@ class DosisController
 
     public function delete($id)
     {
+        if(!Auth::hasPermission('dosis.eliminar')) redirect('');
         Dosis::find($id)->delete();
 
         redirect('dosis', ["message" => "La dosis fue eliminada de los registros"]);

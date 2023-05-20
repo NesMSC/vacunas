@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Auth;
 use App\Http\Request;
 
 use App\Http\Middleware\AuthMiddleware;
@@ -23,6 +24,7 @@ class PacientesController
 
     public function index()
     {
+        if(!Auth::hasPermission('pacientes.consultar')) redirect('');
         $pacientes = Paciente::all();
 
         return view(
@@ -34,26 +36,30 @@ class PacientesController
 
     public function create()
     {
+        if(!Auth::hasPermission('pacientes.crear')) redirect('');
         return view('pacientes.create', [], 'principal');
     }
 
     public function ver($id)
     {
+        if(!Auth::hasPermission('pacientes.consultar')) redirect('');
         $paciente = Paciente::find($id);
         return view('pacientes.show', ["paciente" => $paciente], 'principal');
     }
 
     public function editar($id)
     {
+        if(!Auth::hasPermission('pacientes.actualizar')) redirect('');
         $paciente = Paciente::find($id);
         return view('pacientes.edit', ["paciente" => $paciente], 'principal');
     }
 
     public function store(Request $request)
     {
+        if(!Auth::hasPermission('pacientes.crear')) redirect('');
         $data = $request->post();
         
-        if(!$data) redirect('/');
+        if(!$data) redirect('');
 
         try {
             $paciente = new Paciente;
@@ -85,9 +91,10 @@ class PacientesController
 
     public function update(Request $request, $id)
     {
+        if(!Auth::hasPermission('pacientes.actualizar')) redirect('');
         $data = $request->post();
 
-        if(!$data) redirect('/');
+        if(!$data) redirect('');
 
         $paciente = Paciente::find($id);
 
@@ -115,6 +122,7 @@ class PacientesController
 
     public function delete($id)
     {
+        if(!Auth::hasPermission('pacientes.eliminar')) redirect('');
         $paciente = Paciente::find($id);
         $paciente->delete();
         redirect('pacientes', ["message" => "El paciente fue eliminado"]);
